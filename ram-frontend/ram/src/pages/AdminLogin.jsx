@@ -32,6 +32,10 @@ function AdminLogin() {
 
   return (
     <div className="container mt-5">
+  <div className="row justify-content-center">
+    <div className="col-md-8 col-lg-6 col-xl-5">
+      <div className="card shadow p-4">
+
       <h2>Admin Login</h2>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleLogin}>
@@ -60,6 +64,9 @@ function AdminLogin() {
           <Link to="/auth/register">Register</Link>
         </div>
       </form>
+    </div>
+    </div>
+    </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 // src/pages/AdminRegister.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AdminRegister() {
   const [admin, setAdmin] = useState({
@@ -11,12 +12,16 @@ function AdminRegister() {
   });
 
   const [message, setMessage] = useState('');
+  const navigator = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdmin({ ...admin, [name]: value });
   };
 
+  // function adminLogin() {
+    
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,6 +37,9 @@ function AdminRegister() {
         phone: '',
         role: 'ADMIN',
       });
+      navigator('/auth/login')
+      
+      console.log(response.data)
     } catch (error) {
       console.error('Admin registration failed:', error);
       setMessage('Registration Failed. Please try again.');
@@ -39,7 +47,10 @@ function AdminRegister() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-5">
+  <div className="row justify-content-center">
+    <div className="col-md-8 col-lg-6 col-xl-5">
+      <div className="card shadow p-4">
       <h2 className="mb-4">Admin Registration</h2>
 
       {message && <div className="alert alert-info">{message}</div>}
@@ -83,10 +94,13 @@ function AdminRegister() {
 
         <input type="hidden" name="role" value="ADMIN" />
 
-        <button type="submit" className="btn btn-success">
+        <button type="submit" className="btn btn-success" >
           Register Admin
         </button>
       </form>
+    </div>
+    </div>
+    </div>
     </div>
   );
 }

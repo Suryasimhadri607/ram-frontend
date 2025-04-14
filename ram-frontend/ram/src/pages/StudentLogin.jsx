@@ -14,7 +14,7 @@ function StudentLogin() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/student/login', {
+      const response = await axios.post('http://localhost:8080/auth/login', {
         emailId,
         password,
       });
@@ -31,7 +31,10 @@ function StudentLogin() {
 
   return (
     <div className="container mt-5">
-      <h2>Student Login</h2>
+  <div className="row justify-content-center">
+    <div className="col-md-8 col-lg-6 col-xl-5">
+      <div className="card shadow p-4">
+      <h2 className=''>Student Login</h2>
       <form onSubmit={handleLogin}>
         <div className="mb-3">
           <label>Email</label>
@@ -73,6 +76,9 @@ function StudentLogin() {
           </Link>
         </div>
       </form>
+    </div>
+    </div>
+    </div>
     </div>
   );
 }
