@@ -1,10 +1,12 @@
 // src/pages/AdminDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function AdminDashboard() {
   const [students, setStudents] = useState([]);
   const [interviews, setInterviews] = useState([]);
+  const navigate= useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -32,9 +34,13 @@ function AdminDashboard() {
     }
   };
 
+  function handleStudentRegister(){
+    navigate('/student/register')
+}
+
   const fetchInterviews = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/admin/interviews', {
+      const response = await axios.get('http://localhost:8080/interviews/admin/all', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setInterviews(response.data);
@@ -59,7 +65,7 @@ function AdminDashboard() {
 
   return (
     <div className="container mt-4">
-      <h2>Admin Dashboard</h2>
+      <h2 className='text-body-secondary'>Admin Dashboard</h2>
 
       <h4 className="mt-4">Student List</h4>
       <table className="table table-bordered">
@@ -80,7 +86,7 @@ function AdminDashboard() {
               <td>{student.firstName} {student.lastName}</td>
               <td>{student.email}</td>
               <td>{student.course}</td>
-              <td>{student.phoneNumber}</td>
+              <td>{student.phone}</td>
               <td>
                 <button
                   className="btn btn-warning btn-sm me-2"
@@ -101,7 +107,7 @@ function AdminDashboard() {
       </table>
 
       <h4 className="mt-5">Interview Records</h4>
-      <table className="table table-bordered">
+      <table className="table">
         <thead className="table-light">
           <tr>
             <th>Student ID</th>
@@ -113,6 +119,7 @@ function AdminDashboard() {
             <th>Status</th>
             <th>Offer Letter</th>
             <th>Comments</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -127,10 +134,25 @@ function AdminDashboard() {
               <td>{interview.interviewStatus}</td>
               <td>{interview.offerLetter}</td>
               <td>{interview.interviewComments}</td>
+              <td>
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => alert('Update feature coming soon!')}
+                >
+                  Update
+                </button>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => alert('Update feature coming soon!')}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button className='btn btn-primary' onClick={handleStudentRegister}>Student Register</button>
     </div>
   );
 }

@@ -17,6 +17,8 @@ function StudentRegister() {
   const [preview, setPreview] = useState(null); // For previewing the uploaded image
   const [message, setMessage] = useState('');
 
+  const token = localStorage.getItem('token');
+
   // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,11 +50,13 @@ function StudentRegister() {
 
       // Send to backend
       const response = await axios.post(
-        'http://localhost:8080/student/register',
+        'http://localhost:8080/admin/students',
+       
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -66,7 +70,7 @@ function StudentRegister() {
         phone: '',
         course: '',
         password: '',
-        photo: null,
+         photo: null,
       });
       setPreview(null);
     } catch (error) {
@@ -76,14 +80,17 @@ function StudentRegister() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-5">
+  <div className="row justify-content-center">
+    <div className="col-md-8 col-lg-6 col-xl-5">
+      <div className="card shadow p-4">
       <h2 className="mb-4">Student Registration</h2>
 
       {message && <div className="alert alert-info">{message}</div>}
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="row">
-          <div className="col-md-6 mb-3">
+          <div className="">
             <label>First Name</label>
             <input
               type="text"
@@ -95,7 +102,7 @@ function StudentRegister() {
             />
           </div>
 
-          <div className="col-md-6 mb-3">
+          <div className="">
             <label>Last Name</label>
             <input
               type="text"
@@ -107,7 +114,7 @@ function StudentRegister() {
             />
           </div>
 
-          <div className="col-md-6 mb-3">
+          <div className="">
             <label>Student ID</label>
             <input
               type="text"
@@ -201,6 +208,9 @@ function StudentRegister() {
           Register Student
         </button>
       </form>
+    </div>
+    </div>
+    </div>
     </div>
   );
 }
